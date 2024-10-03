@@ -14,17 +14,34 @@ describe('Testes para getUserById', () => {
     await connection.end();
   });
   
-  
-
   test('deve retornar o usuário correto pelo id', async () => {
     
+    const inicio = performance.now();
     const user = await getUserById(1);
+    const fim = performance.now();
+
+    const duracao = fim - inicio;
+    console.log('Tempo de execução: $(duracao.toFixed(2)} ms');
+    expect(duracao).toBeLessThanOrEqual(100);
 
     expect(user).toHaveProperty('nome_pessoa', 'Natália Guimarães');
     expect(user).toHaveProperty('contato', '75999999999');
     expect(user).toHaveProperty('email', 'email@email.com');
     expect(user).toHaveProperty('data_agendamento', '2024-10-11');
     
+});
+
+test('Verificar se getUserById responde em menos de 50ms', async () => {
+    
+  const inicio = performance.now();
+  await getUserById(1);
+  const fim = performance.now();
+
+  const duracao = fim - inicio;
+  console.log('Tempo de execução: $(duracao.toFixed(2)} ms');
+  expect(duracao).toBeLessThanOrEqual(50);
+  
+  
 });
 
 });
