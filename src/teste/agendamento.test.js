@@ -1,6 +1,5 @@
 const {  getUserById, connection } = require('./db');
 
-
 describe('Testes para getUserById', () => {
 
   beforeAll(async () => {
@@ -41,36 +40,33 @@ test('Verificar se getUserById responde em menos de 50ms', async () => {
   console.log('Tempo de execução: $(duracao.toFixed(2)} ms');
   expect(duracao).toBeLessThanOrEqual(50);
   
-  
 });
-
 
 test('Atualização de agendamento', async () => {
   const [result] = await connection.execute(
     'UPDATE agendamento SET nome_pessoa = ? WHERE id = ?',
-    ['Ana Silva', 2] // Use the actual user ID
+    ['Natália Guimarães', 2]
   );
   
-  expect(result.affectedRows).toBe(2);
+  expect(result.affectedRows).toBe(1);
 
-  // Verify the update
+
   const updatedUser = await getUserById(2);
-  expect(updatedUser).toHaveProperty('nome_pessoa', 'Carlos Silva');
+  expect(updatedUser).toHaveProperty('nome_pessoa', 'Natália Guimarães');
 });
 
 test ('Delete agendamento', async () => {
   const [result] = await connection.execute(
     'DELETE FROM agendamento WHERE id = ?',
-    [9]
+    [1]
   );
 
   expect(result.affectedRows).toBe(1);
 
-  const deleteUser = await getUserById(9);
+  const deleteUser = await getUserById(1);
   expect(deleteUser).toBeNull();
 })
 });
-
 
 /*describe('CRUD de Agendamento', () => {
   let agendamentoId;

@@ -9,7 +9,7 @@ app.get('/agendamentos/:id', async (req, res) => {
         if (user) {
             res.json(user);
         } else {
-            res.status(404).json({ message: 'Usuario não existe'});
+            res.status(404).json({ message: 'Agendamento não existe'});
         } 
     } catch (error) {
         res.status(500).json({ message: 'Erro de conexão com o bd'});
