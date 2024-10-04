@@ -44,21 +44,31 @@ test('Verificar se getUserById responde em menos de 50ms', async () => {
   
 });
 
-});
 
-/*
 test('Atualização de agendamento', async () => {
   const [result] = await connection.execute(
     'UPDATE agendamento SET nome_pessoa = ? WHERE id = ?',
-    ['Carlos Silva', 1] // Use the actual user ID
+    ['Ana Silva', 2] // Use the actual user ID
   );
   
-  expect(result.affectedRows).toBe(1);
+  expect(result.affectedRows).toBe(2);
 
   // Verify the update
-  const updatedUser = await getUserById(1);
+  const updatedUser = await getUserById(2);
   expect(updatedUser).toHaveProperty('nome_pessoa', 'Carlos Silva');
 });
+
+test ('Delete agendamento', async () => {
+  const [result] = await connection.execute(
+    'DELETE FROM agendamento WHERE id = ?',
+    [9]
+  );
+
+  expect(result.affectedRows).toBe(1);
+
+  const deleteUser = await getUserById(9);
+  expect(deleteUser).toBeNull();
+})
 });
 
 
