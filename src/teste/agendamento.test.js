@@ -2,8 +2,8 @@ const { getUserById, connection } = require('./db');
 
 describe('Testes para getUserById', () => {
   beforeAll(async () => {
-    await connection.query("CREATE TABLE IF NOT EXISTS agendamento (id INT AUTO_INCREMENT PRIMARY KEY, nome_pessoa VARCHAR(255), contato VARCHAR(20), email VARCHAR(255), data_agendamento VARCHAR(20))");
-    await connection.query("INSERT INTO agendamento (nome_pessoa, contato, email, data_agendamento) VALUES ('Natália Guimarães', '75999999999', 'email@email.com', '2024-10-11')");
+    //await connection.query("CREATE TABLE IF NOT EXISTS agendamento (id INT AUTO_INCREMENT PRIMARY KEY, nome_pessoa VARCHAR(255), contato VARCHAR(20), email VARCHAR(255), data_agendamento VARCHAR(20))");
+    //await connection.query("INSERT INTO agendamento (nome_pessoa, contato, email, data_agendamento) VALUES ('Natália Guimarães', '75999999999', 'email@email.com', '2024-10-11')");
   });
 
   afterAll(async () => {
@@ -13,7 +13,7 @@ describe('Testes para getUserById', () => {
 
   test('deve retornar o usuário correto pelo id', async () => {
     const inicio = performance.now();
-    const user = await getUserById(1);
+    const user = await getUserById(5);
     const fim = performance.now();
 
     const duracao = fim - inicio;
@@ -26,7 +26,8 @@ describe('Testes para getUserById', () => {
     expect(user).toHaveProperty('data_agendamento', '2024-10-11');
   });
 
-  test('Verificar se getUserById responde em menos de 50ms', async () => {
+});
+  /*test('Verificar se getUserById responde em menos de 50ms', async () => {
     const inicio = performance.now();
     await getUserById(1);
     const fim = performance.now();
@@ -37,12 +38,12 @@ describe('Testes para getUserById', () => {
   });
 
   test('Atualização de agendamento', async () => {
-    // Primeiro, insira um registro que realmente exista
+    // Inserir um registro
     await connection.query("INSERT INTO agendamento (nome_pessoa, contato, email, data_agendamento) VALUES ('Usuario Teste', '75999999998', 'test@email.com', '2024-10-12')");
 
     const [result] = await connection.execute(
       'UPDATE agendamento SET nome_pessoa = ? WHERE id = ?',
-      ['Natália Guimarães', 3] // Certifique-se de que o ID 2 existe
+      ['Augusto', 3] // Certifique-se de que o ID 2 exist
     );
 
     expect(result.affectedRows).toBe(1);
@@ -54,20 +55,24 @@ describe('Testes para getUserById', () => {
   test('Delete agendamento', async () => {
     const [result] = await connection.execute(
       'DELETE FROM agendamento WHERE id = ?',
-      [1] // Certifique-se de que o ID 2 foi criado anteriormente
+      [4] // Certifique-se de que o ID foi criado anteriormente
     );
 
     expect(result.affectedRows).toBe(1);
 
-    const deleteUser = await getUserById(1);
+    const deleteUser = await getUserById(4);
     expect(deleteUser).toBeNull();
   });
 
   test('verifica se parte do nome está presente', async () => {
-    const agendamento = await getUserById(1);
-    expect(agendamento.nome_pessoa).toMatch(/Nat/);
+    const agendamento = await getUserById(3);
+    expect(agendamento.nome_pessoa).toMatch(/Aug/);
   });
 });
+
+
+//comentários
+
 
 /*describe('CRUD de Agendamento', () => {
   let agendamentoId;

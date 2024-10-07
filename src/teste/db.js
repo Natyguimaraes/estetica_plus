@@ -9,7 +9,7 @@ const connection = mysql.createPool({
 
 
 async function getUserById(id) {
-    const [rows] = await connection.query('SELECT * FROM agendamentos WHERE id = ?', [id]);
+    const [rows] = await connection.query('SELECT * FROM agendamento WHERE id = ?', [id]);
     return rows[0];
 }
 
